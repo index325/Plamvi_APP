@@ -2,25 +2,17 @@ import React, {Component} from 'react';
 import {
   Image,
   StyleSheet,
-  // View,
-  // Text,
   FlatList,
   Platform,
   TouchableHighlight,
 } from 'react-native';
-// import {Button as CustomButtom} from '../componentes/Button';
-import FormTextInput from '../componentes/FormTextInput';
 import imageLogo from '../assets/imagens/logo.png';
 import colors from '../config/colors';
 import constants from '../config/constants';
 import axios from 'axios';
-import {showMessage, hideMessage} from 'react-native-flash-message';
-import FlashMessage from 'react-native-flash-message';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
-import {createAnimatableComponent, View, Text} from 'react-native-animatable';
+import {showMessage} from 'react-native-flash-message';
+import {View, Text} from 'react-native-animatable';
 import AsyncStorage from '@react-native-community/async-storage';
-import Home from './Home';
 
 export default class ClientSelection extends Component {
   constructor(props) {

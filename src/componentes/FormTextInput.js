@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, TextInput, TextInputProps} from 'react-native';
+import {StyleSheet, TextInput} from 'react-native';
 import colors from '../config/colors';
 
 class FormTextInput extends Component {

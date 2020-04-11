@@ -1,26 +1,14 @@
 import React, {Component} from 'react';
-import {
-  Image,
-  KeyboardAvoidingView,
-  StyleSheet,
-  View as ViewR,
-  // Text,
-  Animated,
-  Button,
-} from 'react-native';
-// import {Button as CustomButtom} from '../componentes/Button';
+import {Image, KeyboardAvoidingView, StyleSheet, Button} from 'react-native';
 import FormTextInput from '../componentes/FormTextInput';
 import imageLogo from '../assets/imagens/logo.png';
 import colors from '../config/colors';
 import constants from '../config/constants';
 import axios from 'axios';
-import {showMessage, hideMessage} from 'react-native-flash-message';
+import {showMessage} from 'react-native-flash-message';
 import FlashMessage from 'react-native-flash-message';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
-import {createAnimatableComponent, View, Text} from 'react-native-animatable';
+import {View, Text} from 'react-native-animatable';
 import AsyncStorage from '@react-native-community/async-storage';
-import ClientSelection from './ClientSelection';
 
 export default class Login extends Component {
   constructor(props) {
@@ -37,7 +25,7 @@ export default class Login extends Component {
 
   async componentDidMount() {
     let token = await this._getToken();
-    console.log(token)
+    console.log(token);
     if (token) {
       this.props.navigation.navigate('clientSelection');
     }
