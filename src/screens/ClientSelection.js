@@ -22,19 +22,7 @@ import {createAnimatableComponent, View, Text} from 'react-native-animatable';
 import AsyncStorage from '@react-native-community/async-storage';
 import Home from './Home';
 
-const FlatListItemSeparator = () => {
-  return (
-    <View
-      style={{
-        height: 0.5,
-        width: '100%',
-        backgroundColor: '#000',
-      }}
-    />
-  );
-};
-
-class ClientSelection extends Component {
+export default class ClientSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +32,7 @@ class ClientSelection extends Component {
   }
   _getUserToken = async () => {
     try {
-      let userToken = (await AsyncStorage.getItem('tokenUser')) || 'none';
+      let userToken = (await AsyncStorage.getItem('tokenUser')) || false;
       return userToken;
     } catch (error) {
       // Error saving data
@@ -61,7 +49,7 @@ class ClientSelection extends Component {
 
   async componentDidMount() {
     let self = this;
-    let token = this._getUserToken();
+    let token = await this._getUserToken();
     token =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZENsaWVudGUiOiI1ZTg4MGU1OWNjZjcwZDIwYmM1MzBkYjAiLCJpYXQiOjE1ODYzMzAzMjIsImV4cCI6MTU4Njc2MjMyMn0.QhazgTyZrTwGQhwOjlEygr79N3dpFoyc189VAxVrp3w';
     await axios({
@@ -87,10 +75,10 @@ class ClientSelection extends Component {
       });
   }
 
-  handleNavigateToProdutos(id) {
+  async handleNavigateToProdutos(id) {
     console.log(id);
     this._storeClientId(id);
-    this.props.navigation.navigate('home');
+    this.props.navigation.navigate('dashboard');
   }
 
   render() {
@@ -114,11 +102,7 @@ class ClientSelection extends Component {
               <View style={{flex: 1, flexDirection: 'column'}}>
                 <TouchableHighlight
                   onPress={() => this.handleNavigateToProdutos(item._id)}>
-                  <Image
-                    source={imageLogo}
-                    style={styles.imageView}
-                    // onClick={() => this.handleNavigateToProdutos()}
-                  />
+                  <Image source={imageLogo} style={styles.imageView} />
                 </TouchableHighlight>
                 <Text style={styles.textView}>{item.email}</Text>
               </View>
@@ -128,63 +112,6 @@ class ClientSelection extends Component {
         </View>
       </View>
     );
-  }
-}
-
-const Stack = createStackNavigator();
-
-const _storeClientNavigation = async navigation => {
-  try {
-    await AsyncStorage.setItem('clientNavigation', navigation);
-  } catch (error) {
-    // Error saving data
-  }
-};
-
-function HomeScreen({navigation}) {
-  _storeClientNavigation(navigation)
-  return <Home clientNavigation={navigation} />;
-}
-
-class Navigator extends Component {
-  render() {
-    return (
-      <NavigationContainer independent={true}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="clientSelection"
-            component={ClientSelection}
-            options={{
-              headerShown: false,
-              title: 'Seleção de estabelecimentos',
-            }}
-          />
-          <Stack.Screen
-            name="home"
-            component={HomeScreen}
-            options={{
-              title: 'Seleção de produtos',
-            }}
-          />
-          {/* <Stack.Screen
-            name="screen2"
-            component={Cadastro}
-            navigationOptions={{
-              headerLeft: null,
-            }}
-            options={{
-              title: 'Cadastro',
-            }}
-          /> */}
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
-}
-
-export default class App extends Component {
-  render() {
-    return <Navigator />;
   }
 }
 

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {Text, View, Button} from 'react-native';
+import {Text, View, TouchableHighlight} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import ProductsList from '../componentes/ProductsList';
+import {Icon} from 'react-native-elements';
 
 function HomeScreen({navigation}) {
   React.useEffect(() => {
@@ -23,18 +24,12 @@ function HomeScreen({navigation}) {
   return <ProductsList />;
 }
 
-function SettingsScreen() {
+function LogoutComponent() {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function TestScreen() {
-  return (
-    <View>
-      <Button title="teste" />
+    <View style={{marginRight: 10}}>
+      <TouchableHighlight onPress={() => logout}>
+        <Icon name="exit-run" type="material-community" color="#517fa4" />
+      </TouchableHighlight>
     </View>
   );
 }
@@ -45,7 +40,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.props.clientNavigation.setOptions({
-      headerRight: () => <TestScreen />,
+      headerRight: () => <LogoutComponent />,
     });
   }
 

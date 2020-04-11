@@ -35,4 +35,19 @@ export default StyleSheet.create({
     justifyContent: 'center',
     width: '80%',
   },
+  largeLogo: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#34495e',
+  },
+  joinUsBlock: {
+    marginTop: 20,
+  },
 });

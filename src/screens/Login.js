@@ -22,7 +22,7 @@ import {createAnimatableComponent, View, Text} from 'react-native-animatable';
 import AsyncStorage from '@react-native-community/async-storage';
 import ClientSelection from './ClientSelection';
 
-class Login extends Component {
+export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,15 +35,10 @@ class Login extends Component {
 
   handleViewRef = ref => (this.view = ref);
 
-  bounce = () =>
-    this.view
-      .bounce(800)
-      .then(endState =>
-        console.log(endState.finished ? 'bounce finished' : 'bounce cancelled'),
-      );
-
-  componentDidMount() {
-    if (this._getToken) {
+  async componentDidMount() {
+    let token = await this._getToken();
+    console.log(token)
+    if (token) {
       this.props.navigation.navigate('clientSelection');
     }
   }
@@ -72,7 +67,7 @@ class Login extends Component {
 
   _getToken = async () => {
     try {
-      let userToken = (await AsyncStorage.getItem('tokenUser')) || 'none';
+      let userToken = (await AsyncStorage.getItem('tokenUser')) || false;
       return userToken;
     } catch (error) {
       // Error saving data
@@ -180,51 +175,6 @@ export class Cadastro extends React.Component {
         <Button title="Back" onPress={() => this.props.navigation.goBack()} />
       </View>
     );
-  }
-}
-
-const Stack = createStackNavigator();
-
-class Navigator extends Component {
-  render() {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="screen1"
-            component={Login}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="screen2"
-            component={Cadastro}
-            navigationOptions={{
-              headerLeft: null,
-            }}
-            options={{
-              title: 'Cadastro',
-            }}
-          />
-          <Stack.Screen
-            name="clientSelection"
-            component={ClientSelection}
-            options={{
-              headerShown: false,
-              headerLeft: null,
-              title: 'Seleçãoo de estabelecimentos',
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
-}
-
-export default class App extends Component {
-  render() {
-    return <Navigator />;
   }
 }
 

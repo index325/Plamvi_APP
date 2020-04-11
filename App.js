@@ -1,3 +1,3 @@
-import Login from './src/screens/Login';
+import Login from './src/routes/Main.routes';
 
 export default Login;
