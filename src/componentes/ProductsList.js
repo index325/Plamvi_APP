@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FlatList, TouchableHighlight} from 'react-native';
+import {FlatList, TouchableHighlight, StyleSheet} from 'react-native';
 import constants from '../config/constants';
 import axios from 'axios';
 import {showMessage} from 'react-native-flash-message';
@@ -23,6 +23,15 @@ export default class ProductsList extends Component {
     }
   };
 
+  _getUserToken = async () => {
+    try {
+      let userToken = (await AsyncStorage.getItem('tokenUser')) || false;
+      return userToken;
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
   handleNavigateToProdutoOverview() {
     console.log('to overview');
   }
@@ -30,8 +39,7 @@ export default class ProductsList extends Component {
   async componentDidMount() {
     let self = this;
     let clientId = (await this._getClientId()).toString();
-    let token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZENsaWVudGUiOiI1ZTg4MGU1OWNjZjcwZDIwYmM1MzBkYjAiLCJpYXQiOjE1ODYzMzAzMjIsImV4cCI6MTU4Njc2MjMyMn0.QhazgTyZrTwGQhwOjlEygr79N3dpFoyc189VAxVrp3w';
+    let token = await this._getUserToken();
     await axios({
       method: 'get',
       url: constants.API_USER_URL + '/produtos',
@@ -58,23 +66,73 @@ export default class ProductsList extends Component {
       });
   }
 
+  renderItem = ({item}) => (
+    <View style={styles.productContainer}>
+      <Text style={styles.productTitle}>{item.nome}</Text>
+      <Text style={styles.productDescription}>{item.descricao}</Text>
+
+      <TouchableHighlight
+        underlayColor="#FAFAFA"
+        style={styles.productButton}
+        onPress={() => this.handleNavigateToProdutoOverview(item._id)}>
+        <Text style={styles.productButtonText}>Acessar</Text>
+      </TouchableHighlight>
+    </View>
+  );
+
   render() {
     return (
       <View>
         <FlatList
+          contentContainerStyle={styles.list}
           data={this.state.apiData}
-          keyExtractor={(item, index) => index.toString()}
-          // ItemSeparatorComponent={this.FlatListItemSeparator}
-          renderItem={({item}) => (
-            <View style={{flex: 1, flexDirection: 'column'}}>
-              <TouchableHighlight
-                onPress={() => this.handleNavigateToProdutoOverview(item._id)}>
-                <Text>{item.descricao}</Text>
-              </TouchableHighlight>
-            </View>
-          )}
+          keyExtractor={item => item._id}
+          renderItem={this.renderItem}
         />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fafafa',
+  },
+  list: {
+    padding: 20,
+  },
+  productContainer: {
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#DDD',
+    borderRadius: 5,
+    padding: 20,
+    marginBottom: 20,
+  },
+  productTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  productDescription: {
+    fontSize: 16,
+    color: '#999',
+    marginTop: 5,
+    lineHeight: 24,
+  },
+  productButton: {
+    height: 42,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#DA552F',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 18,
+  },
+  productButtonText: {
+    fontSize: 16,
+    color: '#DA552F',
+    fontWeight: 'bold',
+  },
+});

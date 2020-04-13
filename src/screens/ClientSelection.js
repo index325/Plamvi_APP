@@ -42,8 +42,7 @@ export default class ClientSelection extends Component {
   async componentDidMount() {
     let self = this;
     let token = await this._getUserToken();
-    token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZENsaWVudGUiOiI1ZTg4MGU1OWNjZjcwZDIwYmM1MzBkYjAiLCJpYXQiOjE1ODYzMzAzMjIsImV4cCI6MTU4Njc2MjMyMn0.QhazgTyZrTwGQhwOjlEygr79N3dpFoyc189VAxVrp3w';
+    console.log(token)
     await axios({
       method: 'get',
       url: constants.API_USER_URL + '/clientes',
@@ -54,6 +53,7 @@ export default class ClientSelection extends Component {
       },
     })
       .then(function(response) {
+        console.log(response.data)
         self.setState({apiData: response.data.data});
       })
       .catch(function(error) {
@@ -90,13 +90,16 @@ export default class ClientSelection extends Component {
             data={this.state.apiData}
             keyExtractor={(item, index) => index.toString()}
             // ItemSeparatorComponent={this.FlatListItemSeparator}
+            contentContainerStyle={styles.list}
             renderItem={({item}) => (
-              <View style={{flex: 1, flexDirection: 'column'}}>
+              <View style={styles.productContainer}>
+                <Text style={styles.productTitle}>{item.email}</Text>
                 <TouchableHighlight
+                  underlayColor="#FAFAFA"
+                  style={styles.productButton}
                   onPress={() => this.handleNavigateToProdutos(item._id)}>
-                  <Image source={imageLogo} style={styles.imageView} />
+                  <Text style={styles.productButtonText}>Acessar</Text>
                 </TouchableHighlight>
-                <Text style={styles.textView}>{item.email}</Text>
               </View>
             )}
           />
@@ -164,5 +167,36 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     padding: 10,
     color: '#000',
+  },
+  list: {
+    padding: 20,
+  },
+  productContainer: {
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#DDD',
+    borderRadius: 5,
+    padding: 20,
+    marginBottom: 20,
+  },
+  productTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  productButton: {
+    height: 42,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#DA552F',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 18,
+  },
+  productButtonText: {
+    fontSize: 16,
+    color: '#DA552F',
+    fontWeight: 'bold',
   },
 });
