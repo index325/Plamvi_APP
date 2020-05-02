@@ -27,6 +27,7 @@ class FormTextInput extends Component {
 const styles = StyleSheet.create({
   textInput: {
     height: 40,
+    width: '90%',
     borderColor: colors.SILVER,
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 20,

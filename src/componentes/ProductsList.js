@@ -5,8 +5,10 @@ import axios from 'axios';
 import {showMessage} from 'react-native-flash-message';
 import {View, Text} from 'react-native-animatable';
 import AsyncStorage from '@react-native-community/async-storage';
+import CartContext from '../contexts/cart';
 
 export default class ProductsList extends Component {
+  static contextType = CartContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +27,7 @@ export default class ProductsList extends Component {
 
   _getUserToken = async () => {
     try {
-      let userToken = (await AsyncStorage.getItem('tokenUser')) || false;
+      let userToken = (await AsyncStorage.getItem('@Auth:token')) || false;
       return userToken;
     } catch (error) {
       // Error saving data
@@ -38,6 +40,7 @@ export default class ProductsList extends Component {
 
   async componentDidMount() {
     let self = this;
+
     let clientId = (await this._getClientId()).toString();
     let token = await this._getUserToken();
     await axios({

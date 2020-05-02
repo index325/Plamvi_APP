@@ -24,7 +24,8 @@ export default class ClientSelection extends Component {
   }
   _getUserToken = async () => {
     try {
-      let userToken = (await AsyncStorage.getItem('tokenUser')) || false;
+      let userToken = (await AsyncStorage.getItem('@Auth:token')) || false;
+      console.log(2)
       return userToken;
     } catch (error) {
       // Error saving data
@@ -42,7 +43,7 @@ export default class ClientSelection extends Component {
   async componentDidMount() {
     let self = this;
     let token = await this._getUserToken();
-    console.log(token)
+    console.log(3);
     await axios({
       method: 'get',
       url: constants.API_USER_URL + '/clientes',
@@ -53,10 +54,10 @@ export default class ClientSelection extends Component {
       },
     })
       .then(function(response) {
-        console.log(response.data)
         self.setState({apiData: response.data.data});
       })
       .catch(function(error) {
+        console.log(error);
         showMessage({
           message: 'Oops!',
           description: error.response.data.error,
