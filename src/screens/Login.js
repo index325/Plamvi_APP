@@ -58,38 +58,6 @@ export default class Login extends Component {
 
   handleLoginPress = async () => {
     await this.context.signIn(this.state.email, this.state.password);
-    console.log(this.context);
-    // this.state.loadingText = 'Carregando...';
-
-    // let self = this;
-    // axios({
-    //   method: 'post',
-    //   url: constants.API_USER_URL + '/login',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Accept: '*/*',
-    //   },
-    //   data: {
-    //     email: this.state.email,
-    //     senha: this.state.password,
-    //   },
-    // })
-    //   .then(function(response) {
-    //     self._storeToken(response.data.token);
-    //     self.state.loading = false;
-    //     self.props.navigation.navigate('clientSelection');
-    //   })
-    //   .catch(function(error) {
-    //     self.state.loading = false;
-    //     self.state.loadingText = 'Fazer Login';
-    //     showMessage({
-    //       message: 'Oops!',
-    //       description: error.response.data.error,
-    //       type: 'danger',
-    //       position: 'bottom',
-    //       floating: true,
-    //     });
-    //   });
   };
   render() {
     return (
@@ -97,8 +65,6 @@ export default class Login extends Component {
         style={styles.container}
         behavior={constants.IS_IOS ? 'padding' : undefined}>
         <Image source={imageLogo} style={styles.logo} />
-        {/* <View animation="zoomIn" delay={200} useNativeDriver> */}
-        {/* </View> */}
         <View
           style={styles.form}
           ref="parent"

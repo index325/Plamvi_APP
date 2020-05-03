@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FlatList, TouchableHighlight, StyleSheet} from 'react-native';
+import {FlatList, TouchableHighlight, StyleSheet, Image} from 'react-native';
 import constants from '../config/constants';
 import axios from 'axios';
 import {showMessage} from 'react-native-flash-message';
@@ -36,6 +36,7 @@ export default class ProductsList extends Component {
 
   handleNavigateToProdutoOverview() {
     console.log('to overview');
+    this.props.navigation.navigate('ProductOverview');
   }
 
   async componentDidMount() {
@@ -69,19 +70,40 @@ export default class ProductsList extends Component {
       });
   }
 
-  renderItem = ({item}) => (
-    <View style={styles.productContainer}>
-      <Text style={styles.productTitle}>{item.nome}</Text>
-      <Text style={styles.productDescription}>{item.descricao}</Text>
+  renderItem = ({item}) => {
+    // <View style={styles.productContainer}>
+    //   <Text style={styles.productTitle}>{item.nome}</Text>
+    //   <Text style={styles.productDescription}>{item.descricao}</Text>
 
-      <TouchableHighlight
-        underlayColor="#FAFAFA"
-        style={styles.productButton}
-        onPress={() => this.handleNavigateToProdutoOverview(item._id)}>
-        <Text style={styles.productButtonText}>Acessar</Text>
-      </TouchableHighlight>
-    </View>
-  );
+    //   <TouchableHighlight
+    //     underlayColor="#FAFAFA"
+    //     style={styles.productButton}
+    //     onPress={() => this.handleNavigateToProdutoOverview(item._id)}>
+    //     <Text style={styles.productButtonText}>Acessar</Text>
+    //   </TouchableHighlight>
+    // </View>
+    return (
+      <View style={styles.box}>
+        <Image
+          style={styles.productImage}
+          source={require('../assets/imagens/product.jpg')}
+        />
+        <View style={styles.productInfo}>
+          <View style={styles.productHead}>
+            <Text style={styles.productTitle}>{item.nome}</Text>
+            <Text style={styles.productPrice}>R$ {item.preco}</Text>
+          </View>
+          <Text>{item.descricao}</Text>
+          <TouchableHighlight
+            underlayColor="#FAFAFA"
+            style={styles.productButton}
+            onPress={() => this.handleNavigateToProdutoOverview(item._id)}>
+            <Text style={styles.productButtonText}>Acessar</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    );
+  };
 
   render() {
     return (
@@ -104,6 +126,33 @@ const styles = StyleSheet.create({
   list: {
     padding: 20,
   },
+  productHead: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  productInfo: {
+    flex: 1,
+    marginLeft: 10,
+    alignSelf: 'center',
+  },
+  box: {
+    padding: 20,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#DDD',
+    marginBottom: 15,
+  },
+  productPrice: {
+    alignSelf: 'flex-start',
+    flexDirection: 'column',
+  },
+  productImage: {
+    borderRadius: 1000,
+    width: 100,
+    height: 100,
+    alignSelf: 'center',
+  },
   productContainer: {
     backgroundColor: '#FFF',
     borderWidth: 1,
@@ -116,6 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+    flex: 1,
   },
   productDescription: {
     fontSize: 16,
