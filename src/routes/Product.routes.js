@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import ProductsList from '../componentes/ProductsList';
+import ProductsList from '../screens/ProductsList';
 import ProductOverview from '../screens/ProductOverview';
 
 const ProductStack = createStackNavigator();

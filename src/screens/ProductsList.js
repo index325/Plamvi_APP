@@ -6,6 +6,8 @@ import {showMessage} from 'react-native-flash-message';
 import {View, Text} from 'react-native-animatable';
 import AsyncStorage from '@react-native-community/async-storage';
 import CartContext from '../contexts/cart';
+import Modal from '../componentes/modal';
+import ProductFlatList from '../componentes/ProductFlatList';
 
 export default class ProductsList extends Component {
   static contextType = CartContext;
@@ -13,8 +15,20 @@ export default class ProductsList extends Component {
     super(props);
     this.state = {
       apiData: null,
+      modalVisible: false,
+      modalData: {
+        nome: '',
+        preco: 0.0,
+        _id: 0,
+        descricao: '',
+      },
     };
+    this._modalVisible = this._modalVisible.bind(this);
   }
+
+  _modalVisible = () => {
+    this.setState({modalVisible: !this.state.modalVisible});
+  };
 
   _getClientId = async () => {
     try {
@@ -32,6 +46,11 @@ export default class ProductsList extends Component {
     } catch (error) {
       // Error saving data
     }
+  };
+
+  _setModalData = data => {
+    this.setState({modalData: data});
+    console.log(data);
   };
 
   handleNavigateToProdutoOverview() {
@@ -70,41 +89,6 @@ export default class ProductsList extends Component {
       });
   }
 
-  renderItem = ({item}) => {
-    // <View style={styles.productContainer}>
-    //   <Text style={styles.productTitle}>{item.nome}</Text>
-    //   <Text style={styles.productDescription}>{item.descricao}</Text>
-
-    //   <TouchableHighlight
-    //     underlayColor="#FAFAFA"
-    //     style={styles.productButton}
-    //     onPress={() => this.handleNavigateToProdutoOverview(item._id)}>
-    //     <Text style={styles.productButtonText}>Acessar</Text>
-    //   </TouchableHighlight>
-    // </View>
-    return (
-      <View style={styles.box}>
-        <Image
-          style={styles.productImage}
-          source={require('../assets/imagens/product.jpg')}
-        />
-        <View style={styles.productInfo}>
-          <View style={styles.productHead}>
-            <Text style={styles.productTitle}>{item.nome}</Text>
-            <Text style={styles.productPrice}>R$ {item.preco}</Text>
-          </View>
-          <Text>{item.descricao}</Text>
-          <TouchableHighlight
-            underlayColor="#FAFAFA"
-            style={styles.productButton}
-            onPress={() => this.handleNavigateToProdutoOverview(item._id)}>
-            <Text style={styles.productButtonText}>Acessar</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
-    );
-  };
-
   render() {
     return (
       <View>
@@ -112,7 +96,20 @@ export default class ProductsList extends Component {
           contentContainerStyle={styles.list}
           data={this.state.apiData}
           keyExtractor={item => item._id}
-          renderItem={this.renderItem}
+          renderItem={({item}) => (
+            <ProductFlatList
+              item={item}
+              modalVisible={this._modalVisible}
+              modalData={this._setModalData}
+              visible={this.state.modalVisible}
+            />
+          )}
+        />
+
+        <Modal
+          modalVisible={this._modalVisible}
+          visible={this.state.modalVisible}
+          modalData={this.state.modalData}
         />
       </View>
     );

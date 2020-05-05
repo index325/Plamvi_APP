@@ -23,7 +23,7 @@ const AppRoutes = () => (
         name="dashboard"
         component={DashboardRoute}
         options={{
-          title: 'Seleção de estabelecimentos',
+          title: 'Catálogo de produtos',
           headerRight: () => <LogoutComponent navigation={this.navigation} />,
         }}
       />

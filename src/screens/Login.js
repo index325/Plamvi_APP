@@ -4,10 +4,8 @@ import FormTextInput from '../componentes/FormTextInput';
 import imageLogo from '../assets/imagens/logo.png';
 import colors from '../config/colors';
 import constants from '../config/constants';
-import axios from 'axios';
-import {showMessage} from 'react-native-flash-message';
 import FlashMessage from 'react-native-flash-message';
-import {View, Text} from 'react-native-animatable';
+import {View} from 'react-native-animatable';
 import AsyncStorage from '@react-native-community/async-storage';
 import AuthContext from '../contexts/auth';
 
