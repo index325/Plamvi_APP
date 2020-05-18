@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {FlatList, TouchableHighlight, StyleSheet, Image} from 'react-native';
 import constants from '../config/constants';
 import axios from 'axios';
-import {showMessage} from 'react-native-flash-message';
 import {View, Text} from 'react-native-animatable';
 import AsyncStorage from '@react-native-community/async-storage';
 import CartContext from '../contexts/cart';
 import Modal from '../componentes/modal';
 import ProductFlatList from '../componentes/ProductFlatList';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
 
 export default class ProductsList extends Component {
   static contextType = CartContext;
@@ -17,10 +17,10 @@ export default class ProductsList extends Component {
       apiData: null,
       modalVisible: false,
       modalData: {
-        nome: '',
-        preco: 0.0,
-        _id: 0,
-        descricao: '',
+        name: '',
+        price: 0.0,
+        id: 0,
+        description: '',
       },
     };
     this._modalVisible = this._modalVisible.bind(this);
@@ -48,26 +48,21 @@ export default class ProductsList extends Component {
     }
   };
 
-  _setModalData = data => {
-    this.setState({modalData: data});
-    console.log(data);
+  _setModalData = async data => {
+    await this.setState({modalData: data});
   };
-
-  handleNavigateToProdutoOverview() {
-    console.log('to overview');
-    this.props.navigation.navigate('ProductOverview');
-  }
 
   async componentDidMount() {
     let self = this;
 
     let clientId = (await this._getClientId()).toString();
+
     let token = await this._getUserToken();
     await axios({
       method: 'get',
       url: constants.API_USER_URL + '/produtos',
       params: {
-        idCliente: clientId,
+        customer: '1',
       },
       headers: {
         'Content-Type': 'application/json',
@@ -95,13 +90,14 @@ export default class ProductsList extends Component {
         <FlatList
           contentContainerStyle={styles.list}
           data={this.state.apiData}
-          keyExtractor={item => item._id}
+          keyExtractor={item => item.id}
           renderItem={({item}) => (
             <ProductFlatList
               item={item}
               modalVisible={this._modalVisible}
               modalData={this._setModalData}
               visible={this.state.modalVisible}
+              navigation={this.props.navigation}
             />
           )}
         />
@@ -111,6 +107,7 @@ export default class ProductsList extends Component {
           visible={this.state.modalVisible}
           modalData={this.state.modalData}
         />
+        <FlashMessage position="bottom" />
       </View>
     );
   }

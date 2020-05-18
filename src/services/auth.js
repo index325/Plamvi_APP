@@ -12,8 +12,8 @@ export async function SignInService(email, password) {
       Accept: '*/*',
     },
     data: {
-      email: email,
-      senha: password,
+      email,
+      password,
     },
   })
     .then(function(response) {

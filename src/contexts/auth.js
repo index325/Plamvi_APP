@@ -30,7 +30,6 @@ export const AuthProvider = ({children}) => {
     await AsyncStorage.setItem('@Auth:user', JSON.stringify(response.user));
     await AsyncStorage.setItem('@Auth:token', response.token);
     setUser(response.user);
-    console.log(1);
   }
 
   function signOut() {

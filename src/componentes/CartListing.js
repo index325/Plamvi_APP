@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native-animatable';
 import {TouchableHighlight, StyleSheet, Image} from 'react-native';
 
-export default class ProductFlatList extends React.Component {
+export default class CartListing extends React.Component {
   handleVisible = () => {
     this.props.modalVisible();
   };
@@ -11,6 +11,9 @@ export default class ProductFlatList extends React.Component {
   };
   handleNavigateToProdutoOverview(id) {
     this.props.navigation.navigate('ProductOverview');
+  }
+  componentDidMount() {
+    console.log(this.props.item.product.name);
   }
   render() {
     return (
@@ -21,10 +24,14 @@ export default class ProductFlatList extends React.Component {
         />
         <View style={styles.productInfo}>
           <View style={styles.productHead}>
-            <Text style={styles.productTitle}>{this.props.item.name}</Text>
-            <Text style={styles.productPrice}>R$ {this.props.item.price}</Text>
+            <Text style={styles.productTitle}>
+              {this.props.item.product.name}
+            </Text>
+            <Text style={styles.productPrice}>
+              R$ {this.props.item.product.price}
+            </Text>
           </View>
-          <Text>{this.props.item.description}</Text>
+          <Text>{this.props.item.descricao}</Text>
           <TouchableHighlight
             underlayColor="#FAFAFA"
             style={styles.productButton}

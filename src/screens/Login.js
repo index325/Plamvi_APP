@@ -1,4 +1,4 @@
-import React, {Component, useContext} from 'react';
+import React, {Component} from 'react';
 import {Image, KeyboardAvoidingView, StyleSheet, Button} from 'react-native';
 import FormTextInput from '../componentes/FormTextInput';
 import imageLogo from '../assets/imagens/logo.png';
@@ -31,12 +31,10 @@ export default class Login extends Component {
     }
   }
 
-  handleEmailChange = email => {
-    this.setState({email: email});
-  };
+  handleEmailChange = email => this.setState({email});
 
   handlePasswordChange = password => {
-    this.setState({password: password});
+    this.setState({password});
   };
 
   handleEmailSubmitPress = () => {

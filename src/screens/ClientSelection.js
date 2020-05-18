@@ -13,8 +13,10 @@ import axios from 'axios';
 import {showMessage} from 'react-native-flash-message';
 import {View, Text} from 'react-native-animatable';
 import AsyncStorage from '@react-native-community/async-storage';
+import AuthContext from '../contexts/auth';
 
 export default class ClientSelection extends Component {
+  static contextType = AuthContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +27,6 @@ export default class ClientSelection extends Component {
   _getUserToken = async () => {
     try {
       let userToken = (await AsyncStorage.getItem('@Auth:token')) || false;
-      console.log(2)
       return userToken;
     } catch (error) {
       // Error saving data
@@ -34,16 +35,19 @@ export default class ClientSelection extends Component {
 
   _storeClientId = async id => {
     try {
-      await AsyncStorage.setItem('clientId', id);
+      await AsyncStorage.setItem('clientId', id.toString());
     } catch (error) {
       // Error saving data
     }
   };
 
+  _redirectToLogin = async () => {
+    this.context.signOut();
+  };
+
   async componentDidMount() {
     let self = this;
     let token = await this._getUserToken();
-    console.log(3);
     await axios({
       method: 'get',
       url: constants.API_USER_URL + '/clientes',
@@ -54,10 +58,13 @@ export default class ClientSelection extends Component {
       },
     })
       .then(function(response) {
-        self.setState({apiData: response.data.data});
+        self.setState({apiData: response.data.result});
       })
       .catch(function(error) {
-        console.log(error);
+        self._redirectToLogin();
+        if (error.status == 401) {
+          self._redirectToLogin();
+        }
         showMessage({
           message: 'Oops!',
           description: error.response.data.error,
@@ -69,7 +76,6 @@ export default class ClientSelection extends Component {
   }
 
   async handleNavigateToProdutos(id) {
-    console.log(id);
     this._storeClientId(id);
     this.props.navigation.navigate('dashboard');
   }
@@ -98,7 +104,7 @@ export default class ClientSelection extends Component {
                 <TouchableHighlight
                   underlayColor="#FAFAFA"
                   style={styles.productButton}
-                  onPress={() => this.handleNavigateToProdutos(item._id)}>
+                  onPress={() => this.handleNavigateToProdutos(item.id)}>
                   <Text style={styles.productButtonText}>Acessar</Text>
                 </TouchableHighlight>
               </View>

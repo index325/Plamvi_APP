@@ -25,7 +25,7 @@ export async function getCartService() {
     },
   })
     .then(function(response) {
-      apiData = response.data.result.itensCarrinho;
+      apiData = response.data.result.cart_itens;
     })
     .catch(function(error) {
       showMessage({
@@ -39,7 +39,7 @@ export async function getCartService() {
   return apiData;
 }
 
-export async function addProductToCartService(quantity, product) {
+export async function addProductToCartService(quantidade, produto) {
   let token = await _getUserToken();
   let apiData;
   await axios({
@@ -51,14 +51,16 @@ export async function addProductToCartService(quantity, product) {
       Authorization: `Bearer ${token}`,
     },
     data: {
-      quantity,
-      product,
+      quantity: quantidade,
+      product: produto,
     },
   })
     .then(function(response) {
-      apiData = response.data.carrinho.itensCarrinho;
+      apiData = response.data.result.cart_itens;
     })
     .catch(function(error) {
+      console.log('teste2');
+      console.log(error);
       showMessage({
         message: 'Oops!',
         description: error.response.data.error,

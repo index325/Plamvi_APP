@@ -6,6 +6,7 @@ import ProductRoutes from './Product.routes';
 // import {Icon} from 'react-native-elements';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-ionicons';
+import CartScreen from '../screens/CartScreen';
 const Tab = createMaterialTopTabNavigator();
 
 function SettingsScreen() {
@@ -41,6 +42,7 @@ export default function DashboardRoutes() {
         inactiveTintColor: 'gray',
       }}>
       <Tab.Screen name="Home" component={ProductRoutes} />
+      <Tab.Screen name="Cart" component={CartScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );

@@ -21,7 +21,11 @@ export const CartProvider = ({children}) => {
     setCart(response);
   }
 
-  return <CartContext.Provider value={{cart}}>{children}</CartContext.Provider>;
+  return (
+    <CartContext.Provider value={{cart, getCart, addToCart}}>
+      {children}
+    </CartContext.Provider>
+  );
 };
 
 export default CartContext;
