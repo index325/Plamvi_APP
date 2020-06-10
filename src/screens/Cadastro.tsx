@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, View, Text, Button } from "react-native";
+import { Image, StyleSheet, View, Text, Alert, KeyboardAvoidingView } from "react-native";
 // import styles from '../estilo/Padrao';
 import FormTextInput from "../components/FormTextInput";
 import colors from "../config/colors";
 import axios from "axios";
 import constants from "../config/constants";
-import { showMessage } from "react-native-flash-message";
-import FlashMessage from "react-native-flash-message";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import api from "../services/api";
 import { useNavigation } from "@react-navigation/native";
-import RNPickerSelect, { defaultStyles } from "react-native-picker-select";
+import * as yup from "yup";
+import Button from "../components/Button";
+import { Formik } from "formik";
+import RNPickerSelect from "react-native-picker-select";
 
 interface IBGEUFResponse {
   nome: string;
@@ -22,33 +24,33 @@ interface IBGECityResponse {
 }
 
 const Cadastro: React.FC = () => {
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  // const [name, setName] = useState<string>("");
+  // const [email, setEmail] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("0");
-  const [password, setPassword] = useState<string>("");
-  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+  // const [password, setPassword] = useState<string>("");
+  // const [passwordConfirm, setPasswordConfirm] = useState<string>("");
   const [ibgeCities, setIbgeCities] = useState<string[] | any>([]);
   const [ibgeStates, setIbgeStates] = useState<string[] | any>([]);
   const [cityDisabled, setCityDisabled] = useState<boolean>(true);
 
   const navigation = useNavigation();
 
-  function handleEmailChange(email: string) {
-    setEmail(email);
-  }
+  // function handleEmailChange(email: string) {
+  //   setEmail(email);
+  // }
 
-  function handlePasswordChange(password: string) {
-    setPassword(password);
-  }
+  // function handlePasswordChange(password: string) {
+  //   setPassword(password);
+  // }
 
-  function handlePasswordConfirmChange(passwordConfirm: string) {
-    setPasswordConfirm(passwordConfirm);
-  }
+  // function handlePasswordConfirmChange(passwordConfirm: string) {
+  //   setPasswordConfirm(passwordConfirm);
+  // }
 
-  function handleNameChange(name: string) {
-    setName(name);
-  }
+  // function handleNameChange(name: string) {
+  //   setName(name);
+  // }
 
   useEffect(() => {
     axios
@@ -83,7 +85,14 @@ const Cadastro: React.FC = () => {
       });
   }, [state]);
 
-  async function handleRegisterPress() {
+  async function handleRegisterPress(
+    password: string,
+    state: string,
+    passwordConfirm: string,
+    city: string,
+    name: string,
+    email: string
+  ) {
     if (password !== passwordConfirm) {
       showMessage({
         message: "Oops!",
@@ -128,85 +137,226 @@ const Cadastro: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.formFieldContainer}>
-        <FormTextInput
-          value={email}
-          onChangeText={handleEmailChange}
-          placeholder="E-mail"
-          autoCorrect={false}
-          keyboardType="email-address"
-        />
-        <FormTextInput
-          value={name}
-          onChangeText={handleNameChange}
-          placeholder="Nome"
-          autoCorrect={true}
-          autoCapitalize="words"
-        />
-        <View style={pickerSelectStyles.inputAndroid}>
-          <RNPickerSelect
-            style={{
-              ...pickerSelectStyles,
-              iconContainer: {
-                top: 10,
-                right: 12,
-              },
-            }}
-            onValueChange={(state) => {
-              console.log(state)
-              if (state) {
-                setCityDisabled(false);
-              } else {
-                setCityDisabled(true);
-              }
-              setState(state);
-            }}
-            items={ibgeStates}
-            placeholder={{
-              label: "Selecione um estado",
-              value: null,
-              color: "#9EA0A4",
-            }}
-          />
-        </View>
-        <View style={pickerSelectStyles.inputAndroid}>
-          <RNPickerSelect
-            style={{
-              ...pickerSelectStyles,
-              iconContainer: {
-                top: 10,
-                right: 12,
-              },
-            }}
-            disabled={cityDisabled}
-            onValueChange={(city) => setCity(city)}
-            items={ibgeCities}
-            placeholder={{
-              label: cityDisabled
-                ? "Selecione um estado primeiro"
-                : "Selecione uma cidade",
-              value: null,
-              color: "#9EA0A4",
-            }}
-          />
-        </View>
-        <FormTextInput
-          value={password}
-          onChangeText={handlePasswordChange}
-          placeholder="Senha"
-          secureTextEntry={true}
-        />
-        <FormTextInput
-          value={passwordConfirm}
-          onChangeText={handlePasswordConfirmChange}
-          placeholder="Confirmação de Senha"
-          secureTextEntry={true}
-        />
-      </View>
-      <Button title="Registrar" onPress={handleRegisterPress} />
+    <KeyboardAvoidingView
+    // style={styles.container}
+    behavior={constants.IS_IOS ? "padding" : undefined}
+  >
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+          name: "",
+          passwordConfirm: "",
+          state: "",
+          city: "",
+        }}
+        onSubmit={async (values, { setErrors }) => {
+          if (state === null || state === "0") {
+            setErrors({ state: "Este campo é obrigatório" });
+          }
+          if (city === null || city === "0") {
+            setErrors({ city: "Este campo é obrigatório" });
+          }
+          if (values.password !== values.passwordConfirm) {
+            showMessage({
+              message: "Oops!",
+              description: "As senhas não são iguais",
+              type: "danger",
+              position: "bottom",
+              floating: true,
+            });
+            setErrors({ passwordConfirm: "As senhas não são iguais" });
+            return false;
+          }
+          axios({
+            method: "post",
+            url: constants.API_USER_URL,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "*/*",
+            },
+            data: {
+              email: values.email,
+              password: values.password,
+              name: values.name,
+              state,
+              city,
+            },
+          })
+            .then(async (response) => {
+              await showMessage({
+                message: "Sucesso!",
+                description:
+                  "Você se cadastrou com sucesso. Agora, faça o login!",
+                type: "success",
+                position: "bottom",
+                floating: true,
+              });
+              navigation.navigate("loginScreen");
+            })
+            .catch(async (error) => {
+              await showMessage({
+                message: "Oops!",
+                description: error.response.data.error,
+                type: "danger",
+                position: "bottom",
+                floating: true,
+              });
+            });
+        }}
+        validationSchema={yup.object().shape({
+          email: yup
+            .string()
+            .email("Digite um e-mail válido")
+            .required("Este campo é obrigatório"),
+          password: yup
+            .string()
+            .min(6, "Digite uma senha com mais de 6 carácteres")
+            .required("Este campo é obrigatório"),
+          passwordConfirm: yup
+            .string()
+            .min(6, "Digite uma senha com mais de 6 carácteres")
+            .required("Este campo é obrigatório"),
+          name: yup.string().required("Este campo é obrigatório"),
+        })}
+      >
+        {({
+          values,
+          handleChange,
+          errors,
+          setFieldTouched,
+          touched,
+          isValid,
+          handleSubmit,
+          setErrors,
+        }) => (
+          <View style={styles.container}>
+            <View style={styles.formFieldContainer}>
+              <FormTextInput
+                // value={email}
+                // onChangeText={handleEmailChange}
+                onChangeText={handleChange("email")}
+                onBlur={() => setFieldTouched("email")}
+                placeholder="E-mail"
+                autoCorrect={false}
+                keyboardType="email-address"
+              />
+              {touched.email && errors.email && (
+                <Text style={styles.errorText}>{errors.email}</Text>
+              )}
+              <FormTextInput
+                // value={name}
+                // onChangeText={handleNameChange}
+                onChangeText={handleChange("name")}
+                onBlur={() => setFieldTouched("name")}
+                placeholder="Nome"
+                autoCorrect={true}
+                autoCapitalize="words"
+              />
+              {touched.name && errors.name && (
+                <Text style={styles.errorText}>{errors.name}</Text>
+              )}
+              <View style={pickerSelectStyles.inputAndroid}>
+                <RNPickerSelect
+                  style={{
+                    ...pickerSelectStyles,
+                    iconContainer: {
+                      top: 10,
+                      right: 12,
+                    },
+                  }}
+                  onValueChange={(state) => {
+                    if (state !== null) {
+                      delete errors.state;
+                      setCityDisabled(false);
+                      setErrors({ city: "Este campo é obrigatório" });
+                    } else {
+                      setCityDisabled(true);
+                      setErrors({ state: "Este campo é obrigatório" });
+                    }
+                    setState(state);
+                  }}
+                  items={ibgeStates}
+                  placeholder={{
+                    label: "Selecione um estado",
+                    value: null,
+                    color: "#9EA0A4",
+                  }}
+                />
+              </View>
+              {errors.state ? (
+                <Text style={styles.errorText}>{errors.state}</Text>
+              ) : (
+                <Text />
+              )}
+              <View style={pickerSelectStyles.inputAndroid}>
+                <RNPickerSelect
+                  style={{
+                    ...pickerSelectStyles,
+                    iconContainer: {
+                      top: 10,
+                      right: 12,
+                    },
+                  }}
+                  disabled={cityDisabled}
+                  onValueChange={(city) => {
+                    if (city !== null) {
+                      delete errors.city;
+                    } else {
+                      // if(city === '0' || city === null) {
+                      setErrors({ city: "Este campo é obrigatório" });
+                    }
+                    setCity(city);
+                  }}
+                  items={ibgeCities}
+                  placeholder={{
+                    label: cityDisabled
+                      ? "Selecione um estado primeiro"
+                      : "Selecione uma cidade",
+                    value: null,
+                    color: "#9EA0A4",
+                  }}
+                />
+              </View>
+              {errors.city ? (
+                <Text style={styles.errorText}>{errors.city}</Text>
+              ) : (
+                <Text />
+              )}
+              <FormTextInput
+                // value={password}
+                // onChangeText={handlePasswordChange}
+                onChangeText={handleChange("password")}
+                onBlur={() => setFieldTouched("password")}
+                placeholder="Senha"
+                secureTextEntry={true}
+              />
+              {touched.password && errors.password && (
+                <Text style={styles.errorText}>{errors.password}</Text>
+              )}
+              <FormTextInput
+                // value={passwordConfirm}
+                // onChangeText={handlePasswordConfirmChange}
+                onChangeText={handleChange("passwordConfirm")}
+                onBlur={() => setFieldTouched("passwordConfirm")}
+                placeholder="Confirmação de Senha"
+                secureTextEntry={true}
+              />
+              {touched.passwordConfirm && errors.passwordConfirm && (
+                <Text style={styles.errorText}>{errors.passwordConfirm}</Text>
+              )}
+            </View>
+            <Button
+              title="Cadastrar"
+              label="Cadastrar"
+              onPress={handleSubmit}
+              disabled={!isValid}
+            />
+          </View>
+        )}
+      </Formik>
       <FlashMessage position="bottom" />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -223,6 +373,12 @@ const styles = StyleSheet.create({
   },
   formFieldContainer: {
     width: "80%",
+  },
+  errorText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize: 12,
+    color: "red",
   },
 });
 

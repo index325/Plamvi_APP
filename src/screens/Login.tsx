@@ -115,7 +115,7 @@ const Login: React.FC = () => {
               />
             </View>
 
-            <FlashMessage position="bottom" />
+            {/* <FlashMessage position="bottom" /> */}
           </View>
         )}
       </Formik>

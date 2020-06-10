@@ -6,7 +6,6 @@ const Button: React.FC<any> = (props) => {
   const { label, onPress, disabled } = props;
 
   let view;
-  console.log(disabled);
   if (disabled) {
     view = (
       <TouchableOpacity style={styles.disabledContainer} onPress={onPress} disabled={disabled}>

@@ -27,6 +27,7 @@ const AppRoutes = () => {
           options={{
             title: "Catálogo de produtos",
             headerRight: () => <LogoutComponent />,
+            headerStyle: { backgroundColor: "tomato" },
           }}
         />
       </AppStack.Navigator>

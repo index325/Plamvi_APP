@@ -13,6 +13,7 @@ const AppRoutes: React.FC = () => {
         component={Login}
         options={{
           headerShown: false,
+          headerStyle: { backgroundColor: "tomato" },
         }}
       />
       <AppStack.Screen
@@ -23,6 +24,7 @@ const AppRoutes: React.FC = () => {
         }}
         options={{
           title: "Cadastro",
+          headerStyle: { backgroundColor: "tomato" },
         }}
       />
     </AppStack.Navigator>
