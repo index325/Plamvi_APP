@@ -31,7 +31,7 @@ O projeto foi desenvolvido como um trabalho de conclusão de curso. No grupo con
 - E o Guilherme Azevedo, que ajudou na monografia e na documentação do projeto.
 
 <h1 align="center">
-    <img alt="Example" title="Example" src="./web/src/assets/example.png" width="500px" />
+    <img alt="Example" title="Example" src="./src/assets/images/example.jpeg" width="500px" />
 </h1>
 
 
