@@ -60,14 +60,6 @@ const ModalComponent: React.FC<Props> = (props) => {
     await context.addToCart(quantidade, props.modalData ? props.modalData.id : 0);
 
     props.modalVisible();
-
-    showMessage({
-      message: "Sucesso!",
-      description: `${props.modalData ? props.modalData.name : ''} adicionado ao carrinho com sucesso!`,
-      type: "success",
-      position: "bottom",
-      floating: true,
-    });
   }
 
   return (
@@ -75,9 +67,6 @@ const ModalComponent: React.FC<Props> = (props) => {
       animationType="slide"
       transparent={true}
       visible={props.visible}
-      onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
-      }}
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>

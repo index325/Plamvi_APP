@@ -3,6 +3,7 @@ import { View, TouchableHighlight } from "react-native";
 import { Icon } from "react-native-elements";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import colors from "../config/colors";
 
 import AuthContext from "../contexts/auth";
 
@@ -29,7 +30,7 @@ const Logout: React.FC = () => {
   return (
     <View style={{ marginRight: 10 }}>
       <TouchableHighlight onPress={() => goToLogin(signOut)}>
-        <Icon name="exit-run" type="material-community" color="#517fa4" />
+        <Icon name="exit-run" type="material-community" color={colors.BLACK} />
       </TouchableHighlight>
     </View>
   );

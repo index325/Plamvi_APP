@@ -1,24 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-// import ProductsList from '../components/ProductsList';
+import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import ProductRoutes from "./Product.routes";
-// import {Icon} from 'react-native-elements';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-// import Icon from 'react-native-ionicons';
-// import { Feather as Icon } from "@expo/vector-icons";
+import ConfigRoutes from "./config.routes"
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CartScreen from "../screens/CartScreen";
 import CartContext from "../contexts/cart";
-const Tab = createMaterialTopTabNavigator();
+import { color } from "react-native-reanimated";
+import colors from "../config/colors";
+import { useNavigation } from "@react-navigation/native";
+import constants from "../config/constants"
 
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
+const Tab = createMaterialBottomTabNavigator();
 
 export default function DashboardRoutes() {
   const context = useContext(CartContext);
@@ -31,39 +24,46 @@ export default function DashboardRoutes() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{
-        activeTintColor: "tomato",
-        inactiveTintColor: "gray",
-        showIcon: true,
-      }}
+      // tabBarOptions={{
+      //   activeTintColor: colors.ACTIVE_TAB_COLOR,
+      //   inactiveTintColor: "gray",
+      //   showIcon: true,
+      //   indicatorStyle: { backgroundColor: colors.INDICATOR_COLOR },
+      // }}
+      activeColor="black"
+      shifting={true}
     >
       <Tab.Screen
         name="Home"
         component={ProductRoutes}
+        
         options={{
+          tabBarColor: "#137F7B",
           tabBarLabel: "Produtos",
           tabBarIcon: ({ color }) => (
             <View style={styles.iconView}>
               <MaterialCommunityIcons
                 name="baguette"
-                size={14}
+                size={constants.ICONS_SIZE}
                 style={styles.icon}
               />
             </View>
           ),
         }}
+        
       />
       <Tab.Screen
         name="Cart"
         component={CartScreen}
         options={{
+          tabBarColor: "#494EFC",
           tabBarLabel: "Carrinho",
           tabBarIcon: () => (
             <View style={styles.iconView}>
               <View style={styles.iconContainer}>
                 <MaterialCommunityIcons
                   name="cart"
-                  size={14}
+                  size={constants.ICONS_SIZE}
                   style={styles.icon}
                 />
                 <View style={styles.cartLengthView}>
@@ -76,14 +76,15 @@ export default function DashboardRoutes() {
       />
       <Tab.Screen
         name="Settings"
-        component={SettingsScreen}
+        component={ConfigRoutes}
         options={{
           tabBarLabel: "Configurações",
+          tabBarColor: "#694fad",
           tabBarIcon: () => (
             <View style={styles.iconView}>
               <MaterialCommunityIcons
                 name="cogs"
-                size={14}
+                size={constants.ICONS_SIZE}
                 style={styles.icon}
               />
             </View>
@@ -99,13 +100,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   icon: {
-    color: "tomato",
+    color: colors.ICONS_COLOR,
   },
   iconContainer: {
     flexDirection: "row",
   },
   cartLength: {
-    backgroundColor: "tomato",
+    backgroundColor: colors.ICONS_COLOR,
     borderRadius: 100,
     width: 20,
     height: 20,
