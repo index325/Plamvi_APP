@@ -2,24 +2,57 @@ import React, { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import ProductRoutes from "./Product.routes";
-import ConfigRoutes from "./config.routes"
+import ConfigRoutes from "./config.routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CartScreen from "../screens/CartScreen";
 import CartContext from "../contexts/cart";
 import { color } from "react-native-reanimated";
 import colors from "../config/colors";
 import { useNavigation } from "@react-navigation/native";
-import constants from "../config/constants"
+import constants from "../config/constants";
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default function DashboardRoutes() {
   const context = useContext(CartContext);
   const [cartLength, setCartLength] = useState<number>(0);
+  const [cartLabel, setCartLabel] = useState<string>("");
 
   useEffect(() => {
-    setCartLength(context.cart.length);
+    setCartLength(context.cart.cart_itens.length);
+    if (!context.cart.opened){
+      setCartLabel("Finalize a compra")
+    } else{
+      setCartLabel("Carrinho")
+    }
   }, [context.cart]);
+
+  const openedView = () => {
+    return (
+      <View>
+        <MaterialCommunityIcons
+          name="cart"
+          size={constants.ICONS_SIZE}
+          style={styles.icon}
+        />
+        <View>
+          <Text style={styles.cartLength}>{cartLength}</Text>
+        </View>
+      </View>
+    );
+  };
+
+  const closedView = () => {
+    return (
+      <View>
+        <MaterialCommunityIcons
+          name="cash"
+          size={constants.ICONS_SIZE}
+          style={styles.icon}
+        />
+      </View>
+    );
+  };
 
   return (
     <Tab.Navigator
@@ -36,7 +69,6 @@ export default function DashboardRoutes() {
       <Tab.Screen
         name="Home"
         component={ProductRoutes}
-        
         options={{
           tabBarColor: "#137F7B",
           tabBarLabel: "Produtos",
@@ -50,25 +82,17 @@ export default function DashboardRoutes() {
             </View>
           ),
         }}
-        
       />
       <Tab.Screen
         name="Cart"
         component={CartScreen}
         options={{
           tabBarColor: "#494EFC",
-          tabBarLabel: "Carrinho",
+          tabBarLabel: `${cartLabel}`,
           tabBarIcon: () => (
             <View style={styles.iconView}>
               <View style={styles.iconContainer}>
-                <MaterialCommunityIcons
-                  name="cart"
-                  size={constants.ICONS_SIZE}
-                  style={styles.icon}
-                />
-                <View style={styles.cartLengthView}>
-                  <Text style={styles.cartLength}>{cartLength}</Text>
-                </View>
+                {context.cart.opened == false ? closedView() : openedView()}
               </View>
             </View>
           ),

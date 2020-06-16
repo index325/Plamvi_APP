@@ -14,29 +14,27 @@ const _getUserToken = async () => {
 
 export async function getCartService() {
   let token = await _getUserToken();
-  let apiData;
-  await axios({
-    method: "get",
-    url: constants.API_USER_URL + "/verificar_carrinho",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "*/*",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then(function (response) {
-      apiData = response.data.result.cart_itens;
-    })
-    .catch(function (error) {
-      showMessage({
-        message: "Oops!",
-        description: error.response.data.error,
-        type: "danger",
-        position: "bottom",
-        floating: true,
-      });
+
+  try {
+    const apiData = await axios({
+      method: "get",
+      url: constants.API_USER_URL + "/verificar_carrinho",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+        Authorization: `Bearer ${token}`,
+      },
     });
-  return apiData;
+    return apiData.data.result;
+  } catch (error) {
+    showMessage({
+      message: "Oops!",
+      description: error.response.data.error,
+      type: "danger",
+      position: "bottom",
+      floating: true,
+    });
+  }
 }
 
 export async function addProductToCartService(

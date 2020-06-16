@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 
-import UserForm from "../components/UserForm";
+import UserForm from "../components/forms/UserForm";
 import colors from "../config/colors";
 import axios from "axios";
 import constants from "../config/constants";

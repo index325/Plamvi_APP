@@ -14,7 +14,6 @@ const ConfigMenu: React.FC = () => {
   return (
     <View style={styles.list}>
         <MenuConfig />
-      {/* <Text>teste</Text> */}
     </View>
   );
 };

@@ -13,12 +13,14 @@ import { showMessage } from "react-native-flash-message";
 import { View, Text } from "react-native-animatable";
 import AsyncStorage from "@react-native-community/async-storage";
 import AuthContext from "../contexts/auth";
+import ClientContext from "../contexts/client";
 import { useNavigation } from "@react-navigation/native";
 
 const ClientSelection = () => {
   const [apiData, setApiData] = useState();
 
   const context = useContext(AuthContext);
+  const clientContext = useContext(ClientContext);
   const navigation = useNavigation();
 
   async function _getUserToken() {
@@ -56,6 +58,7 @@ const ClientSelection = () => {
       })
         .then((response) => {
           setApiData(response.data.result);
+          console.log(apiData)
         })
         .catch(function (error) {
           _redirectToLogin();
@@ -75,8 +78,15 @@ const ClientSelection = () => {
     getClients();
   }, []);
 
-  async function handleNavigateToProdutos(id: number) {
-    _storeClientId(id);
+  async function handleNavigateToProdutos(item: any) {
+    _storeClientId(item.id);
+    const data = {
+      name: item.name,
+      email: item.email,
+      id: item.id,
+    }
+    clientContext.setClientData(data);
+
     navigation.navigate("dashboard");
   }
 
@@ -91,7 +101,6 @@ const ClientSelection = () => {
         <FlatList
           data={apiData}
           keyExtractor={(item, index) => index.toString()}
-          // ItemSeparatorComponent={this.FlatListItemSeparator}
           contentContainerStyle={styles.list}
           renderItem={({ item }) => (
             <View style={styles.productContainer}>
@@ -99,7 +108,7 @@ const ClientSelection = () => {
               <TouchableHighlight
                 underlayColor="#FAFAFA"
                 style={styles.productButton}
-                onPress={() => handleNavigateToProdutos(item.id)}
+                onPress={() => handleNavigateToProdutos(item)}
               >
                 <Text style={styles.productButtonText}>Acessar</Text>
               </TouchableHighlight>

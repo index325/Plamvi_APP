@@ -9,7 +9,7 @@ import {
 } from "react-native";
 // import styles from '../estilo/Padrao';
 import FormTextInput from "../components/FormTextInput";
-import UserForm from "../components/UserForm";
+import UserForm from "../components/forms/UserForm";
 import colors from "../config/colors";
 import axios from "axios";
 import constants from "../config/constants";

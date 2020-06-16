@@ -5,11 +5,11 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import colors from "../config/colors";
+import colors from "../../config/colors";
 import { StyleSheet, View, Text } from "react-native";
-import Button from "../components/Button";
+import Button from "../Button";
 import RNPickerSelect from "react-native-picker-select";
-import FormTextInput from "../components/FormTextInput";
+import FormTextInput from "../FormTextInput";
 import { FormikErrors, FormikTouched } from "formik";
 
 interface Props {
