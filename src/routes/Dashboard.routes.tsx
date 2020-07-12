@@ -2,14 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import ProductRoutes from "./Product.routes";
-import ConfigRoutes from "./config.routes";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import ConfigRoutes from "./Config.routes";
+// import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CartScreen from "../screens/CartScreen";
-import CartContext from "../contexts/cart";
-import { color } from "react-native-reanimated";
+import CartContext from "../contexts/Cart";
 import colors from "../config/colors";
-import { useNavigation } from "@react-navigation/native";
 import constants from "../config/constants";
+
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -30,11 +29,11 @@ export default function DashboardRoutes() {
   const openedView = () => {
     return (
       <View>
-        <MaterialCommunityIcons
+        {/* <MaterialCommunityIcons
           name="cart"
           size={constants.ICONS_SIZE}
           style={styles.icon}
-        />
+        /> */}
         <View>
           <Text style={styles.cartLength}>{cartLength}</Text>
         </View>
@@ -45,11 +44,11 @@ export default function DashboardRoutes() {
   const closedView = () => {
     return (
       <View>
-        <MaterialCommunityIcons
+        {/* <MaterialCommunityIcons
           name="cash"
           size={constants.ICONS_SIZE}
           style={styles.icon}
-        />
+        /> */}
       </View>
     );
   };
@@ -74,11 +73,11 @@ export default function DashboardRoutes() {
           tabBarLabel: "Produtos",
           tabBarIcon: ({ color }) => (
             <View style={styles.iconView}>
-              <MaterialCommunityIcons
+              {/* <MaterialCommunityIcons
                 name="baguette"
                 size={constants.ICONS_SIZE}
                 style={styles.icon}
-              />
+              /> */}
             </View>
           ),
         }}
@@ -106,11 +105,11 @@ export default function DashboardRoutes() {
           tabBarColor: "#694fad",
           tabBarIcon: () => (
             <View style={styles.iconView}>
-              <MaterialCommunityIcons
+              {/* <MaterialCommunityIcons
                 name="cogs"
                 size={constants.ICONS_SIZE}
                 style={styles.icon}
-              />
+              /> */}
             </View>
           ),
         }}

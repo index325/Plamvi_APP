@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import CheckoutScreen from "../screens/CheckoutScreen";
-import { CheckoutProvider } from "../contexts/checkout";
+import { CheckoutProvider } from "../contexts/Checkout";
 import colors from "../config/colors";
 
 const CheckoutStack = createStackNavigator();

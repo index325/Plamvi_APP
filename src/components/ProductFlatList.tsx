@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text } from "react-native-animatable";
 import { TouchableHighlight, StyleSheet, Image } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import CartContext from "../contexts/Cart";
 
 interface Item {
   product: Product;
@@ -25,6 +26,8 @@ interface Props {
 }
 
 const ProductFlatList: React.FC<Props> = (props) => {
+  const cartContext = useContext(CartContext);
+
   function handleVisible() {
     props.modalVisible();
   }
@@ -57,16 +60,20 @@ const ProductFlatList: React.FC<Props> = (props) => {
         >
           <Text style={styles.productButtonText}>Ver Detalhes</Text>
         </TouchableHighlight>
-        <TouchableHighlight
-          underlayColor="#FAFAFA"
-          style={styles.productButton}
-          onPress={() => {
-            handleModalData(props.item);
-            handleVisible();
-          }}
-        >
-          <Text style={styles.productButtonText}>Comprar</Text>
-        </TouchableHighlight>
+        {cartContext.cart.opened ? (
+          <TouchableHighlight
+            underlayColor="#FAFAFA"
+            style={styles.productButton}
+            onPress={() => {
+              handleModalData(props.item);
+              handleVisible();
+            }}
+          >
+            <Text style={styles.productButtonText}>Comprar</Text>
+          </TouchableHighlight>
+        ) : (
+          <Text></Text>
+        )}
       </View>
     </View>
   );

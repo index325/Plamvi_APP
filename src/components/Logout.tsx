@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import colors from "../config/colors";
 
-import AuthContext from "../contexts/auth";
+import AuthContext from "../contexts/Auth";
 
 const _clearStorage = async () => {
   try {

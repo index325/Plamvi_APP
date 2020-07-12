@@ -16,26 +16,27 @@ interface CartItem {
 
 interface Cart {
   cart_itens: Array<CartItem>;
-  createdAt: string,
-  id: number,
-  opened: boolean,
-  updatedAt: string,
-  user_id: number,
+  createdAt: string;
+  id: number;
+  opened: boolean;
+  updatedAt: string;
+  user_id: number;
 }
 
 interface CartInterface {
   cart: CartItem | any;
   addToCart: (quantity: number, product: any) => void;
   getCart: () => void;
+  children: React.ReactNode;
 }
 
-const CartContext = createContext<CartInterface>({
+const CartContext = createContext<any>({
   cart: {},
   addToCart: function (quantity: number, product: any) {},
   getCart: function () {},
 });
 
-export const CartProvider: React.FC<CartInterface> = ({ children }) => {
+export const CartProvider: React.FC<any> = ({ children }) => {
   const [cart, setCart] = useState<Cart>({
     cart_itens: [],
     createdAt: "",

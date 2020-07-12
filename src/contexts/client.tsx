@@ -9,7 +9,7 @@ interface Client {
   id: number;
 }
 
-const ClientContext = createContext<any>({ client: [{}], setClientData: function(data: Client) {} });
+const ClientContext = createContext<any>({ client: {}, setClientData: function(data: Client) {} });
 
 export const ClientProvider: React.FC<any> = ({ children }) => {
   const [client, setClient] = useState<Client>({

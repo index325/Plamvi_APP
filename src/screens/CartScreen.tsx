@@ -6,11 +6,12 @@ import {
   StyleSheet,
   TouchableHighlight,
 } from "react-native";
-import CartContext from "../contexts/cart";
+import CartContext from "../contexts/Cart";
+import ClientContext from "../contexts/Client";
 import CartListing from "../components/CartListing";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import CheckoutButton from "../components/CheckoutButton";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+// import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../config/colors";
 import constants from "../config/constants";
 
@@ -57,6 +58,9 @@ const CartScreen: React.FC<Props> = (props) => {
   const [modalData, setModalData] = useState<ModalData>();
 
   const context = useContext(CartContext);
+  const clientContext = useContext(ClientContext);
+
+  console.log(clientContext.client)
   const navigation = useNavigation();
 
   function _modalVisible() {
@@ -75,17 +79,26 @@ const CartScreen: React.FC<Props> = (props) => {
     navigation.navigate("Checkout");
   };
 
+  if (!context.cart.opened) {
+    return (
+      <View style={{flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+        <Text>Finalize o seu pagamento.</Text>
+        <Text>Página ainda em desenvolvimento</Text>
+      </View>
+    );
+  }
+
   return (
     <View>
       <CheckoutButton
         label="Prosseguir para o checkout"
         onPress={handleCheckout}
       >
-        <MaterialCommunityIcons
+        {/* <MaterialCommunityIcons
           name="cash"
           size={constants.ICONS_SIZE}
           style={styles.icon}
-        />
+        /> */}
       </CheckoutButton>
 
       <FlatList

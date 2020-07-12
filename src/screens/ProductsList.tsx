@@ -8,6 +8,7 @@ import Modal from "../components/modal";
 import ProductFlatList from "../components/ProductFlatList";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import ClientContext from '../contexts/Client'
 
 interface Item {
   product: Product;
@@ -38,6 +39,7 @@ interface Props {
 
 const ProductsList: React.FC<Props> = (props) => {
   const [apiData, setApiData] = useState();
+  const clientContext = useContext(ClientContext);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalData, setModalData] = useState<Item | undefined>();
 
@@ -76,7 +78,7 @@ const ProductsList: React.FC<Props> = (props) => {
         method: "get",
         url: constants.API_USER_URL + "/produtos",
         params: {
-          customer: "1",
+          customer: "343ae4f1-b45b-423f-853f-4db8d8ddc18a",
         },
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +107,7 @@ const ProductsList: React.FC<Props> = (props) => {
       <FlatList
         contentContainerStyle={styles.list}
         data={apiData}
-        keyExtractor={(item: any) => item.id}
+        keyExtractor={(item: any) => String(item.id)}
         renderItem={({ item }) => (
           <ProductFlatList
             item={item}
