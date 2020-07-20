@@ -11,7 +11,7 @@ import colors from "../config/colors";
 import axios from "axios";
 import constants from "../config/constants";
 import FlashMessage, { showMessage } from "react-native-flash-message";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+// import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import * as yup from "yup";
 

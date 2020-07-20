@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import ProductRoutes from "./Product.routes";
-import ConfigRoutes from "./Config.routes";
+import ConfigRoutes from "./config.routes";
 // import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CartScreen from "../screens/CartScreen";
-import CartContext from "../contexts/Cart";
+import CartContext from "../contexts/cart";
 import colors from "../config/colors";
 import constants from "../config/constants";
 
