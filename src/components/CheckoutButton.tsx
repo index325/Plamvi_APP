@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import colors from "../config/colors";
 import constants from "../config/constants";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const CheckoutButton: React.FC<any> = (props) => {
   const { label, onPress, disabled } = props;

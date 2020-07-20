@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import ProductRoutes from "./Product.routes";
 import ConfigRoutes from "./Config.routes";
-// import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CartScreen from "../screens/CartScreen";
 import CartContext from "../contexts/Cart";
 import colors from "../config/colors";
@@ -29,11 +29,11 @@ export default function DashboardRoutes() {
   const openedView = () => {
     return (
       <View>
-        {/* <MaterialCommunityIcons
+        <Icon
           name="cart"
           size={constants.ICONS_SIZE}
           style={styles.icon}
-        /> */}
+        />
         <View>
           <Text style={styles.cartLength}>{cartLength}</Text>
         </View>
@@ -44,11 +44,11 @@ export default function DashboardRoutes() {
   const closedView = () => {
     return (
       <View>
-        {/* <MaterialCommunityIcons
+        <Icon
           name="cash"
           size={constants.ICONS_SIZE}
           style={styles.icon}
-        /> */}
+        />
       </View>
     );
   };
@@ -73,11 +73,11 @@ export default function DashboardRoutes() {
           tabBarLabel: "Produtos",
           tabBarIcon: ({ color }) => (
             <View style={styles.iconView}>
-              {/* <MaterialCommunityIcons
+              <Icon
                 name="baguette"
                 size={constants.ICONS_SIZE}
                 style={styles.icon}
-              /> */}
+              />
             </View>
           ),
         }}
@@ -105,11 +105,11 @@ export default function DashboardRoutes() {
           tabBarColor: "#694fad",
           tabBarIcon: () => (
             <View style={styles.iconView}>
-              {/* <MaterialCommunityIcons
+              <Icon
                 name="cogs"
                 size={constants.ICONS_SIZE}
                 style={styles.icon}
-              /> */}
+              />
             </View>
           ),
         }}

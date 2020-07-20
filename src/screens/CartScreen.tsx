@@ -11,7 +11,7 @@ import ClientContext from "../contexts/Client";
 import CartListing from "../components/CartListing";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import CheckoutButton from "../components/CheckoutButton";
-// import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from "../config/colors";
 import constants from "../config/constants";
 
@@ -94,11 +94,11 @@ const CartScreen: React.FC<Props> = (props) => {
         label="Prosseguir para o checkout"
         onPress={handleCheckout}
       >
-        {/* <MaterialCommunityIcons
+        <Icon
           name="cash"
           size={constants.ICONS_SIZE}
           style={styles.icon}
-        /> */}
+        />
       </CheckoutButton>
 
       <FlatList

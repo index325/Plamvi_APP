@@ -4,7 +4,7 @@ import CartContext from "../contexts/Cart";
 import CheckoutProductsList from "../components/CheckoutProductsList";
 import CheckoutButton from "../components/CheckoutButton";
 import ClientContext from "../contexts/Client";
-// import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from "../config/colors";
 import constants from "../config/constants";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
@@ -49,18 +49,18 @@ const CheckoutScreen: React.FC = (props) => {
       </View>
       <View>
         <CheckoutButton label="Continuar" onPress={handleNextPage}>
-          {/* <MaterialCommunityIcons
+          <Icon
             name="arrow-right"
             size={constants.ICONS_SIZE}
             style={styles.icon}
-          /> */}
+          />
         </CheckoutButton>
         <CheckoutButton label="Adicionar mais produtos" onPress={handleGoToProducts}>
-          {/* <MaterialCommunityIcons
+          <Icon
             name="plus"
             size={constants.ICONS_SIZE}
             style={styles.icon}
-          /> */}
+          />
         </CheckoutButton>
       </View>
     </View>
