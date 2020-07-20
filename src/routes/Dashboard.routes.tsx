@@ -5,7 +5,7 @@ import ProductRoutes from "./Product.routes";
 import ConfigRoutes from "./Config.routes";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CartScreen from "../screens/CartScreen";
-import CartContext from "../contexts/Cart";
+import CartContext from "../contexts/cart";
 import colors from "../config/colors";
 import constants from "../config/constants";
 
