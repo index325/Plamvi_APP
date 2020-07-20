@@ -8,7 +8,7 @@ import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
 
-import { AuthProvider } from "./src/contexts/auth";
+import { AuthProvider } from "./src/contexts/Auth";
 import Routes from "./src/routes";
 
 export default function App() {

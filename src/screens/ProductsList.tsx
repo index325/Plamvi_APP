@@ -8,7 +8,7 @@ import Modal from "../components/modal";
 import ProductFlatList from "../components/ProductFlatList";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import ClientContext from '../contexts/client'
+import ClientContext from '../contexts/Client'
 
 interface Item {
   product: Product;

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { View, Text } from "react-native-animatable";
 import { TouchableHighlight, StyleSheet, Image } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import CartContext from "../contexts/cart";
+import CartContext from "../contexts/Cart";
 
 interface Item {
   product: Product;

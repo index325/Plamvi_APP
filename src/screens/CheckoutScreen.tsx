@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Text, StyleSheet, View, FlatList } from "react-native";
-import CartContext from "../contexts/cart";
+import CartContext from "../contexts/Cart";
 import CheckoutProductsList from "../components/CheckoutProductsList";
 import CheckoutButton from "../components/CheckoutButton";
 import ClientContext from "../contexts/Client";
@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from "../config/colors";
 import constants from "../config/constants";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import CheckoutContext from "../contexts/checkout";
+import CheckoutContext from "../contexts/Checkout";
 
 const CheckoutScreen: React.FC = (props) => {
   const cartContext = useContext(CartContext);

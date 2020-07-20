@@ -45,7 +45,7 @@ const CartListing: React.FC<Props> = (props) => {
   }
   return (
     <Container>
-      <ProductImage source={require("../assets/images/product.jpg")}/>
+      <ProductImage source={require("../../assets/images/product.jpg")}/>
       <ProductInfo>
         <ProductInfoHeader>
           <ProductTitle>{props.item.product.name}</ProductTitle>

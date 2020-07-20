@@ -3,7 +3,7 @@ import { Icon } from "react-native-elements";
 import AsyncStorage from "@react-native-community/async-storage";
 import colors from "../../config/colors";
 
-import AuthContext from "../../contexts/auth";
+import AuthContext from "../../contexts/Auth";
 
 import { Container, Button } from './styles';
 

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import RNPickerSelect from "react-native-picker-select";
-import CartContext from "../contexts/cart";
+import CartContext from "../contexts/Cart";
 import { Icon } from "react-native-elements";
 
 interface Item {

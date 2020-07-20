@@ -11,13 +11,12 @@ import {
 } from "react-native";
 import FormTextInput from "../components/FormTextInput";
 import Button from "../components/Button";
-// import imageLogo from "../assets/imagens/logo.png";
 import colors from "../config/colors";
 import constants from "../config/constants";
 import FlashMessage from "react-native-flash-message";
 import { View } from "react-native-animatable";
 import AsyncStorage from "@react-native-community/async-storage";
-import AuthContext from "../contexts/auth";
+import AuthContext from "../contexts/Auth";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 const Login: React.FC = () => {
