@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { View, TouchableHighlight } from "react-native";
 import { Icon } from "react-native-elements";
 import AsyncStorage from "@react-native-community/async-storage";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
-import colors from "../config/colors";
+import colors from "../../config/colors";
 
-import AuthContext from "../contexts/auth";
+import AuthContext from "../../contexts/auth";
+
+import { Container, Button } from './styles';
 
 const _clearStorage = async () => {
   try {
@@ -25,14 +25,13 @@ const goToLogin = (
 };
 
 const Logout: React.FC = () => {
-  const { signed, user, signOut } = useContext(AuthContext);
-  // const navigation = useNavigation();
+  const { signOut } = useContext(AuthContext);
   return (
-    <View style={{ marginRight: 10 }}>
-      <TouchableHighlight onPress={() => goToLogin(signOut)}>
+    <Container>
+      <Button onPress={() => goToLogin(signOut)}>
         <Icon name="exit-run" type="material-community" color={colors.BLACK} />
-      </TouchableHighlight>
-    </View>
+      </Button>
+    </Container>
   );
 };
 
