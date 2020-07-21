@@ -4,15 +4,15 @@ import DashboardRoute from "./Dashboard.routes";
 import ClientSelection from "../screens/ClientSelection";
 import UpdateUser from "../screens/UpdateUser";
 import LogoutComponent from "../components/Logout";
-import { CartProvider } from "../contexts/Cart";
-import { ClientProvider } from "../contexts/Client";
-import { CheckoutProvider } from "../contexts/Checkout";
+import { CartProvider } from "../contexts/cart";
+import { ClientProvider } from "../contexts/client";
+import { CheckoutProvider } from "../contexts/checkout";
 import { useNavigation } from "@react-navigation/native";
 import CheckoutRoutes from "./checkout.routes";
 import ProductOverview from "../screens/ProductOverview";
 import CheckoutScreen from "../screens/CheckoutScreen";
 import colors from "../config/colors";
-import ClientContext from "../contexts/Client";
+import ClientContext from "../contexts/client";
 
 const AppStack = createStackNavigator();
 

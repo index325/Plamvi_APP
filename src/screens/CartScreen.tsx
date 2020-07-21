@@ -6,8 +6,8 @@ import {
   StyleSheet,
   TouchableHighlight,
 } from "react-native";
-import CartContext from "../contexts/Cart";
-import ClientContext from "../contexts/Client";
+import CartContext from "../contexts/cart";
+import ClientContext from "../contexts/client";
 import CartListing from "../components/CartListing";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import CheckoutButton from "../components/CheckoutButton";

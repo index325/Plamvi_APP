@@ -12,8 +12,8 @@ import axios from "axios";
 import { showMessage } from "react-native-flash-message";
 import { View, Text } from "react-native-animatable";
 import AsyncStorage from "@react-native-community/async-storage";
-import AuthContext from "../contexts/Auth";
-import ClientContext from "../contexts/Client";
+import AuthContext from "../contexts/auth";
+import ClientContext from "../contexts/client";
 import { useNavigation } from "@react-navigation/native";
 
 const ClientSelection = () => {
