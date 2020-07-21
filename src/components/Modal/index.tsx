@@ -9,8 +9,18 @@ import {
 } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import RNPickerSelect from "react-native-picker-select";
-import CartContext from "../contexts/cart";
+import CartContext from "../../contexts/cart";
 import { Icon } from "react-native-elements";
+
+import {
+  Container,
+  Content,
+  CloseModalButton,
+  OpenButton,
+  IconContainer,
+  ModalText,
+  FooterText
+} from './styles'
 
 interface Item {
   product: Product;
@@ -68,24 +78,20 @@ const ModalComponent: React.FC<Props> = (props) => {
       transparent={true}
       visible={props.visible}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <TouchableHighlight
-            onPress={props.modalVisible}
-            style={styles.closeView}
-          >
-            <View>
+      <Container>
+        <Content style={styles.modalViewShadow}>
+          <CloseModalButton onPress={props.modalVisible}>
+            <IconContainer>
               <Icon
                 name="close"
-                // style={styles.x}
                 type="material-community"
                 color="#517fa4"
               />
-            </View>
-          </TouchableHighlight>
+            </IconContainer>
+          </CloseModalButton>
           <View>
             <Text>Você está comprando: </Text>
-            <Text style={styles.modalText}>{props.modalData ? props.modalData.name : ''}</Text>
+            <ModalText>{props.modalData ? props.modalData.name : ''}</ModalText>
           </View>
 
           <Text>Selecione a quantidade desejada:</Text>
@@ -95,31 +101,20 @@ const ModalComponent: React.FC<Props> = (props) => {
             placeholder={placeholder}
           />
 
-          <TouchableHighlight
-            style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+          <OpenButton
+            style={{ elevation: 2 }}
             onPress={_adicionarAoCarrinho}
           >
-            <Text style={styles.textStyle}>Adicionar ao carrinho</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
+            <FooterText>Adicionar ao carrinho</FooterText>
+          </OpenButton>
+        </Content>
+      </Container>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
+  modalViewShadow: { 
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -128,28 +123,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    width: "95%",
-  },
-  closeView: {
-    margin: 0,
-    display: "flex",
-    alignSelf: "flex-end",
-    bottom: 20,
-  },
-  openButton: {
-    backgroundColor: "#F194FF",
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
   },
 });
 
