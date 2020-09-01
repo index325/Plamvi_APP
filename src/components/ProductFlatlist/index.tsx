@@ -54,7 +54,7 @@ const ProductFlatList: React.FC<Props> = (props) => {
   return (
     <Container>
       <ProductImage
-        source={require("../assets/images/product.jpg")}
+        source={require("../../assets/images/product.jpg")}
       />
       <ProductInfo>
         <ProductInfoHeader>

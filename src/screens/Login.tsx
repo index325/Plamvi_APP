@@ -1,30 +1,21 @@
 import * as yup from "yup";
 import { Formik } from "formik";
 
-import React, { Component, useState, useEffect, useContext } from "react";
-import {
-  Image,
-  KeyboardAvoidingView,
-  StyleSheet,
-  Alert,
-  Text,
-} from "react-native";
+import React, { useContext } from "react";
+import { Image, KeyboardAvoidingView, StyleSheet, Text } from "react-native";
 import FormTextInput from "../components/FormTextInput";
 import Button from "../components/Button";
 import colors from "../config/colors";
 import constants from "../config/constants";
 import FlashMessage from "react-native-flash-message";
 import { View } from "react-native-animatable";
-import AsyncStorage from "@react-native-community/async-storage";
 import AuthContext from "../contexts/auth";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
   const navigation = useNavigation();
   const context = useContext(AuthContext);
+  // console.log(API_URL);
 
   // async function handleLoginPress() {
   //   await context.signIn(email, password);
@@ -93,9 +84,7 @@ const Login: React.FC = () => {
               returnKeyType="done"
             />
             {touched.password && errors.password && (
-              <Text style={styles.errorText}>
-                {errors.password}
-              </Text>
+              <Text style={styles.errorText}>{errors.password}</Text>
             )}
             <View style={styles.nozIndex}>
               <Button

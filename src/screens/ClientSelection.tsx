@@ -45,11 +45,13 @@ const ClientSelection = () => {
   }
 
   useEffect(() => {
+    console.log("aaaa");
     async function getClients() {
       let token = await _getUserToken();
+      console.log(token);
       await axios({
         method: "get",
-        url: constants.API_USER_URL + "/clientes",
+        url: `${constants.API_URL}/users/list_all_available_customers`,
         headers: {
           "Content-Type": "application/json",
           Accept: "*/*",
@@ -57,10 +59,10 @@ const ClientSelection = () => {
         },
       })
         .then((response) => {
-          setApiData(response.data.result);
-          console.log(apiData)
+          setApiData(response.data);
         })
         .catch(function (error) {
+          console.log(error.response.data);
           _redirectToLogin();
           if (error.status == 401) {
             _redirectToLogin();
@@ -84,7 +86,7 @@ const ClientSelection = () => {
       name: item.name,
       email: item.email,
       id: item.id,
-    }
+    };
     clientContext.setClientData(data);
 
     navigation.navigate("dashboard");
@@ -102,18 +104,21 @@ const ClientSelection = () => {
           data={apiData}
           keyExtractor={(item, index) => index.toString()}
           contentContainerStyle={styles.list}
-          renderItem={({ item }) => (
-            <View style={styles.productContainer}>
-              <Text style={styles.productTitle}>{item.email}</Text>
-              <TouchableHighlight
-                underlayColor="#FAFAFA"
-                style={styles.productButton}
-                onPress={() => handleNavigateToProdutos(item)}
-              >
-                <Text style={styles.productButtonText}>Acessar</Text>
-              </TouchableHighlight>
-            </View>
-          )}
+          renderItem={({ item }) => {
+            console.log("a");
+            return (
+              <View style={styles.productContainer}>
+                <Text style={styles.productTitle}>{item.email}</Text>
+                <TouchableHighlight
+                  underlayColor="#FAFAFA"
+                  style={styles.productButton}
+                  onPress={() => handleNavigateToProdutos(item)}
+                >
+                  <Text style={styles.productButtonText}>Acessar</Text>
+                </TouchableHighlight>
+              </View>
+            );
+          }}
         />
         <View style={styles.imageContainer}>
           <Image

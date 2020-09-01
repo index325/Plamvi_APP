@@ -4,7 +4,7 @@ import constants from "../config/constants";
 import axios from "axios";
 import { View, Text } from "react-native-animatable";
 import AsyncStorage from "@react-native-community/async-storage";
-import Modal from "../components/modal";
+import Modal from "../components/Modal";
 import ProductFlatList from "../components/ProductFlatList";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
@@ -76,18 +76,15 @@ const ProductsList: React.FC<Props> = (props) => {
       let token = await _getUserToken();
       await axios({
         method: "get",
-        url: constants.API_USER_URL + "/produtos",
-        params: {
-          customer: "343ae4f1-b45b-423f-853f-4db8d8ddc18a",
-        },
+        url: `${constants.API_URL}` + "/products/list_by_customer/aaee2e8b-7766-4628-91f3-94d76fc8b57d",
         headers: {
           "Content-Type": "application/json",
           Accept: "*/*",
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
       })
         .then(function (response) {
-          setApiData(response.data.result);
+          setApiData(response.data);
         })
         .catch(function (error) {
           showMessage({

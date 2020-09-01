@@ -224,7 +224,7 @@ const UpdateUser: React.FC = () => {
           let token = await _getUserToken();
           axios({
             method: "put",
-            url: constants.API_USER_URL + "/usuario",
+            url: `${constants.API_URL}` + "/users",
             headers: {
               "Content-Type": "application/json",
               Accept: "*/*",

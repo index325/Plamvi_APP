@@ -19,7 +19,8 @@ import { useNavigation } from "@react-navigation/native";
 import * as yup from "yup";
 import Button from "../components/Button";
 import { Formik } from "formik";
-import RNPickerSelect from "react-native-picker-select";
+import {API_URL} from "@env"
+
 
 interface IBGEUFResponse {
   nome: string;
@@ -32,33 +33,13 @@ interface IBGECityResponse {
 }
 
 const Cadastro: React.FC = () => {
-  // const [name, setName] = useState<string>("");
-  // const [email, setEmail] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("0");
-  // const [password, setPassword] = useState<string>("");
-  // const [passwordConfirm, setPasswordConfirm] = useState<string>("");
   const [ibgeCities, setIbgeCities] = useState<string[] | any>([]);
   const [ibgeStates, setIbgeStates] = useState<string[] | any>([]);
   const [cityDisabled, setCityDisabled] = useState<boolean>(true);
 
   const navigation = useNavigation();
-
-  // function handleEmailChange(email: string) {
-  //   setEmail(email);
-  // }
-
-  // function handlePasswordChange(password: string) {
-  //   setPassword(password);
-  // }
-
-  // function handlePasswordConfirmChange(passwordConfirm: string) {
-  //   setPasswordConfirm(passwordConfirm);
-  // }
-
-  // function handleNameChange(name: string) {
-  //   setName(name);
-  // }
 
   useEffect(() => {
     axios
@@ -93,57 +74,6 @@ const Cadastro: React.FC = () => {
       });
   }, [state]);
 
-  async function handleRegisterPress(
-    password: string,
-    state: string,
-    passwordConfirm: string,
-    city: string,
-    name: string,
-    email: string
-  ) {
-    if (password !== passwordConfirm) {
-      showMessage({
-        message: "Oops!",
-        description: "As senhas não são iguais",
-        type: "danger",
-        position: "bottom",
-        floating: true,
-      });
-      return false;
-    }
-    axios({
-      method: "post",
-      url: constants.API_USER_URL,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "*/*",
-      },
-      data: {
-        email,
-        password,
-      },
-    })
-      .then(async (response) => {
-        await showMessage({
-          message: "Sucesso!",
-          description: "Você se cadastrou com sucesso. Agora, faça o login!",
-          type: "success",
-          position: "bottom",
-          floating: true,
-        });
-        navigation.navigate("loginScreen");
-      })
-      .catch(async function (error) {
-        await showMessage({
-          message: "Oops!",
-          description: error.response.data.error,
-          type: "danger",
-          position: "bottom",
-          floating: true,
-        });
-      });
-  }
-
   return (
     <KeyboardAvoidingView
       // style={styles.container}
@@ -176,9 +106,12 @@ const Cadastro: React.FC = () => {
             setErrors({ passwordConfirm: "As senhas não são iguais" });
             return false;
           }
+
+          console.log(values, state, city)
+          
           axios({
             method: "post",
-            url: constants.API_USER_URL,
+            url: `${constants.API_URL}/users`,
             headers: {
               "Content-Type": "application/json",
               Accept: "*/*",
@@ -192,7 +125,7 @@ const Cadastro: React.FC = () => {
             },
           })
             .then(async (response) => {
-              await showMessage({
+              showMessage({
                 message: "Sucesso!",
                 description:
                   "Você se cadastrou com sucesso. Agora, faça o login!",
@@ -203,7 +136,8 @@ const Cadastro: React.FC = () => {
               navigation.navigate("loginScreen");
             })
             .catch(async (error) => {
-              await showMessage({
+              console.log(error.response.data)
+              showMessage({
                 message: "Oops!",
                 description: error.response.data.error,
                 type: "danger",

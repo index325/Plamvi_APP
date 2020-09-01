@@ -10,7 +10,7 @@ export const Content = styled.View`
   margin: 20px;
   background-color: white;
   border-radius: 20px;
-  padding: 35;
+  padding: 35px;
   align-items: center;
   width: 95%;
 `;

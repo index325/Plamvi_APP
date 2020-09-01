@@ -18,7 +18,7 @@ export async function getCartService() {
   try {
     const apiData = await axios({
       method: "get",
-      url: constants.API_USER_URL + "/verificar_carrinho",
+      url: `${constants.API_URL}/carts/verify`,
       headers: {
         "Content-Type": "application/json",
         Accept: "*/*",
@@ -43,9 +43,10 @@ export async function addProductToCartService(
 ) {
   let token = await _getUserToken();
   let apiData;
+  console.log(produto)
   await axios({
     method: "post",
-    url: constants.API_USER_URL + "/adicionar_ao_carrinho",
+    url: `${constants.API_URL}/carts/add_to_cart`,
     headers: {
       "Content-Type": "application/json",
       Accept: "*/*",
@@ -53,7 +54,7 @@ export async function addProductToCartService(
     },
     data: {
       quantity: quantidade,
-      product: produto,
+      product_id: produto,
     },
   })
     .then(function (response) {

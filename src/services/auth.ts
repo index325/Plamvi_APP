@@ -6,7 +6,7 @@ export async function SignInService(email: string, password: string) {
   let apiData;
   await axios({
     method: 'post',
-    url: constants.API_USER_URL + '/login',
+    url: `${constants.API_URL}/users/sessions`,
     headers: {
       'Content-Type': 'application/json',
       Accept: '*/*',

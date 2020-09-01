@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import ProductRoutes from "./Product.routes";
+import ProductRoutes from "./product.routes";
 import ConfigRoutes from "./config.routes";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CartScreen from "../screens/CartScreen";

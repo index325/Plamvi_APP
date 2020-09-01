@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import DashboardRoute from "./Dashboard.routes";
+import DashboardRoute from "./dashboard.routes";
 import ClientSelection from "../screens/ClientSelection";
 import UpdateUser from "../screens/UpdateUser";
 import LogoutComponent from "../components/Logout";
