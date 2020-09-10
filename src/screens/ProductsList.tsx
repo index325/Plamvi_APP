@@ -71,12 +71,12 @@ const ProductsList: React.FC<Props> = (props) => {
 
   useEffect(() => {
     async function getProductList() {
-      let clientId = await _getClientId().toString();
+      let clientId = await _getClientId();
 
       let token = await _getUserToken();
       await axios({
         method: "get",
-        url: `${constants.API_URL}` + "/products/list_by_customer/aaee2e8b-7766-4628-91f3-94d76fc8b57d",
+        url: `${constants.API_URL}/products/list_by_customer/${clientId}`,
         headers: {
           "Content-Type": "application/json",
           Accept: "*/*",

@@ -98,63 +98,12 @@ const UpdateUser: React.FC = () => {
       });
   }, [state]);
 
-  async function handleRegisterPress(
-    password: string,
-    state: string,
-    passwordConfirm: string,
-    city: string,
-    name: string,
-    email: string
-  ) {
-    if (password !== passwordConfirm) {
-      showMessage({
-        message: "Oops!",
-        description: "As senhas não são iguais",
-        type: "danger",
-        position: "bottom",
-        floating: true,
-      });
-      return false;
-    }
-    axios({
-      method: "post",
-      url: constants.API_USER_URL,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "*/*",
-      },
-      data: {
-        email,
-        password,
-      },
-    })
-      .then(async (response) => {
-        await showMessage({
-          message: "Sucesso!",
-          description: "Você se cadastrou com sucesso. Agora, faça o login!",
-          type: "success",
-          position: "bottom",
-          floating: true,
-        });
-        navigation.navigate("loginScreen");
-      })
-      .catch(async function (error) {
-        await showMessage({
-          message: "Oops!",
-          description: error.response.data.error,
-          type: "danger",
-          position: "bottom",
-          floating: true,
-        });
-      });
-  }
-
   useEffect(() => {
     async function getInformation() {
       let token = await _getUserToken();
       await axios({
         method: "get",
-        url: constants.API_USER_URL + "/usuario",
+        url: constants.API_URL + "/users",
         headers: {
           "Content-Type": "application/json",
           Accept: "*/*",
@@ -162,7 +111,7 @@ const UpdateUser: React.FC = () => {
         },
       })
         .then((response) => {
-          setApiData(response.data.data);
+          setApiData(response.data);
           setLoading(false);
         })
         .catch(function (error) {
@@ -240,6 +189,7 @@ const UpdateUser: React.FC = () => {
             },
           })
             .then(async (response) => {
+              
               await showMessage({
                 message: "Sucesso!",
                 description:

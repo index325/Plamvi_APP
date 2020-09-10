@@ -25,7 +25,8 @@ export async function getCartService() {
         Authorization: `Bearer ${token}`,
       },
     });
-    return apiData.data.result;
+    console.log(apiData.data)
+    return apiData.data;
   } catch (error) {
     showMessage({
       message: "Oops!",
@@ -58,7 +59,7 @@ export async function addProductToCartService(
     },
   })
     .then(function (response) {
-      apiData = response.data.result.cart_itens;
+      apiData = response.data.cart_item;
       showMessage({
         message: "Sucesso!",
         description: response.data.success,
@@ -76,5 +77,7 @@ export async function addProductToCartService(
         floating: true,
       });
     });
+    console.log(apiData)
+    return 
   return apiData;
 }

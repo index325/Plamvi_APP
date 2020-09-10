@@ -103,7 +103,7 @@ const CartScreen: React.FC<Props> = (props) => {
 
       <FlatList
         contentContainerStyle={styles.list}
-        data={cart.cart_itens}
+        data={cart.cart_item}
         keyExtractor={(item: CartItem) => item.id.toString()}
         renderItem={({ item }) => (
           <CartListing

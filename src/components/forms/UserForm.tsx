@@ -190,6 +190,7 @@ const UserForm: React.FC<Props> = ({
                   setErrors({ city: "Este campo é obrigatório" });
                 }
                 setFieldValue("city", city);
+                setCity(city)
               }
               setCityCharged(true);
             }}

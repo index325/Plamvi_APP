@@ -18,7 +18,7 @@ export default function DashboardRoutes() {
   const [cartLabel, setCartLabel] = useState<string>("");
 
   useEffect(() => {
-    setCartLength(context.cart.cart_itens.length);
+    setCartLength(context.cart.cart_item.length);
     if (!context.cart.opened){
       setCartLabel("Finalize a compra")
     } else{

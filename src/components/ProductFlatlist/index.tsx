@@ -19,6 +19,7 @@ import {
 interface Item {
   product: Product;
   description: string;
+  short_description: string;
   id: number;
   name: string;
   price: number;
@@ -61,7 +62,7 @@ const ProductFlatList: React.FC<Props> = (props) => {
           <ProductTitle>{props.item.name}</ProductTitle>
           <ProductPrice>R$ {props.item.price}</ProductPrice>
         </ProductInfoHeader>
-        <ItemDescription>{props.item.description}</ItemDescription>
+        <ItemDescription>{props.item.short_description}</ItemDescription>
         <ProductButton
           underlayColor="#FAFAFA"
           onPress={() => {
